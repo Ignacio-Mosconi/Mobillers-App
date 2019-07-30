@@ -7,9 +7,8 @@ namespace MobillersApp.UI
     [RequireComponent(typeof(Graphic))]
     public class FadeAnimation : UIAnimation
     {
-        [Header("Fading Colors")]
-        [SerializeField] Color fadeInColor = Color.white;
-        [SerializeField] Color fadeOutColor = Color.clear;
+        [SerializeField, Range(0f, 1f)] float targetShowAlpha = 1f; 
+        [SerializeField, Range(0f, 1f)] float targetHideAlpha = 0f; 
 
         Graphic graphic;
 
@@ -21,12 +20,12 @@ namespace MobillersApp.UI
 
         public override void Reset()
         {
-            graphic.color = fadeOutColor;
+            graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, targetHideAlpha);
         }
 
         public override Tween Show()
         {
-            Tween tween = graphic.DOColor(fadeInColor, showDuration);
+            Tween tween = graphic.DOFade(targetShowAlpha, showDuration);
             tween.SetEase(showEase);
 
             return tween;
@@ -34,7 +33,7 @@ namespace MobillersApp.UI
 
         public override Tween Hide()
         {
-            Tween tween = graphic.DOColor(fadeOutColor, hideDuration);
+            Tween tween = graphic.DOFade(targetHideAlpha, hideDuration);
             tween.SetEase(hideEase);
 
             return tween;
