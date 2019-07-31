@@ -8,27 +8,30 @@ namespace MobillersApp.UI
         [SerializeField] AppScreen previousScreen = default;
 
         UIAnimation[] uiAnimations;
-        Sequence animationSequence;
 
-        public virtual void Show()
+        public virtual Sequence Show()
         {
-            animationSequence = DOTween.Sequence();
+            Sequence animationSequence = DOTween.Sequence();
             Activate();
             foreach (UIAnimation uiAnimation in uiAnimations)
                 animationSequence.Insert(uiAnimation.ShowStartUpTime, uiAnimation.Show());
+
+            return animationSequence;
         }
 
-        public virtual void Hide()
+        public virtual Sequence Hide()
         {
-            animationSequence = DOTween.Sequence();
+            Sequence animationSequence = DOTween.Sequence();
             foreach (UIAnimation uiAnimation in uiAnimations)
                 animationSequence.Insert(uiAnimation.HideStartUpTime, uiAnimation.Hide());
             animationSequence.OnComplete(Deactivate);
+
+            return animationSequence;
         }
 
-        public virtual void HideReversed()
+        public virtual Sequence HideReversed()
         {
-            animationSequence = DOTween.Sequence();
+            Sequence animationSequence = DOTween.Sequence();
             foreach (UIAnimation uiAnimation in uiAnimations)
             {
                 SlideAnimation slideAnimation = uiAnimation as SlideAnimation;
@@ -38,6 +41,8 @@ namespace MobillersApp.UI
                     animationSequence.Insert(uiAnimation.HideStartUpTime, uiAnimation.Hide());
             }
             animationSequence.OnComplete(Deactivate);
+
+            return animationSequence;
         }
 
         public void SetUpAnimations()

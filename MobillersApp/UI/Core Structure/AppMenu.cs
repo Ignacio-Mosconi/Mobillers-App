@@ -12,6 +12,7 @@ namespace MobillersApp.UI
 
         [Header("Animations")]
         [SerializeField] SlideAnimation slidingMenuAnimation = default;
+        [SerializeField] SlideAnimation menuButtonAnimation = default;
         [SerializeField] FadeAnimation backgroundBlockerAnimation = default;
 
         [Header("Finger Slide Properties")]
@@ -43,7 +44,9 @@ namespace MobillersApp.UI
 
             menuButton.onClick.AddListener(ShowMenu);
             closeButton.onClick.AddListener(HideMenu);
+
             slidingMenuAnimation.SetUp();
+            menuButtonAnimation.SetUp();
             backgroundBlockerAnimation.SetUp();
             
             backgroundBlockerAnimation.Deactivate();
@@ -152,6 +155,26 @@ namespace MobillersApp.UI
             Tween slideTween = slidingMenuAnimation.Hide();
             fadeTween.OnComplete(backgroundBlockerAnimation.Deactivate);
             slideTween.OnComplete(ToggleMenuStatus);
+        }
+
+        public void Activate(Sequence sequence = null)
+        {
+            gameObject.SetActive(true);
+            Tween menuButtonTween = menuButtonAnimation.Show();
+            if (sequence != null)
+                sequence.Append(menuButtonTween);
+        }
+
+        public void Deactivate(Sequence sequence = null)
+        {
+            Tween menuButtonTween = menuButtonAnimation.Hide();
+            if (sequence != null)
+            {
+                sequence.Append(menuButtonTween);
+                sequence.OnComplete(() => gameObject.SetActive(false));
+            }
+            else
+                gameObject.SetActive(false);
         }
     }
 }

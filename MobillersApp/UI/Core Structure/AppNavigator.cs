@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 namespace MobillersApp.UI
 {
@@ -7,6 +8,7 @@ namespace MobillersApp.UI
     {
         [SerializeField] AppScreen homeScreen = default;
 
+        AppMenu appMenu;
         AppScreen[] appScreens;
         AppScreen currentScreen;
         AppScreen previousScreen;
@@ -15,6 +17,7 @@ namespace MobillersApp.UI
         
         void Awake()
         {
+            appMenu = GetComponentInChildren<AppMenu>(includeInactive: true);
             appScreens = GetComponentsInChildren<AppScreen>(includeInactive: true);
 
             currentScreen = homeScreen;
@@ -30,6 +33,15 @@ namespace MobillersApp.UI
         void Start()
         {
             homeScreen.Show();
+            appMenu.Activate();
+        }
+
+        void CheckAppMenuAvailability(Sequence sequence = null)
+        {
+            if (currentScreen == homeScreen)
+                appMenu.Activate(sequence);
+            else
+                appMenu.Deactivate(sequence);
         }
 
         public void MoveToScreen(AppScreen nextScreen)
@@ -37,19 +49,23 @@ namespace MobillersApp.UI
             currentScreen.Hide();
             previousScreen = currentScreen;
 
+            nextScreen.Show();
             currentScreen = nextScreen;
-            currentScreen.Show();
+
+            CheckAppMenuAvailability();
 
             onSwitchedScreen.Invoke();
         }
 
         public void ReturnToPreviousScreen()
         {
-            currentScreen.HideReversed();
+            Sequence hideSequence = currentScreen.HideReversed();
             currentScreen = previousScreen;
 
             previousScreen.Show();
             previousScreen = currentScreen.PreviousScreen;
+
+            CheckAppMenuAvailability(hideSequence);
 
             onSwitchedScreen.Invoke();
         }

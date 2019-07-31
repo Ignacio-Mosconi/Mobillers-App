@@ -70,6 +70,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetDir)$(TargetFileName)" "C:\Users\PC01\Documents\Unity Projects\App Navigation Library\Assets\_Dependencies\MobillersApp"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetDir)$(TargetFileName)" "C:\Users\PC01\Documents\Unity Projects\App Navigation Library\Assets\_Dependencies\MobillersApp"
+copy "$(TargetDir)$(TargetName).pdb" "C:\Users\PC01\Documents\Unity Projects\App Navigation Library\Assets\_Dependencies\MobillersApp"</PostBuildEvent>
   </PropertyGroup>
 </Project>
