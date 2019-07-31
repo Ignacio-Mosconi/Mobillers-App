@@ -48,5 +48,24 @@ namespace MobillersApp.UI
 
             return tween;
         }
+
+        #region Properties
+
+        public Vector2 SlideInOffscreenPosition
+        {
+            get { return slideInOffscreenPosition; }
+        }
+
+        public Vector2 SlideOutOffscreenPosition
+        {
+            get { return slideOutOffscreenPosition; }
+        }
+
+        public Vector2 InitialPosition
+        {
+            get { return initialPosition; }
+        }
+
+        #endregion
     }
 }

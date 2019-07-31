@@ -21,6 +21,16 @@ namespace MobillersApp.UI
         public abstract Tween Show();
         public abstract Tween Hide();
 
+        public virtual void Activate()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public virtual void Deactivate()
+        {
+            gameObject.SetActive(false);
+        }
+
         #region Properties
 
         public float ShowStartUpTime

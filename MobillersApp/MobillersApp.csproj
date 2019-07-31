@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\Core Structure\AppMenu.cs" />
     <Compile Include="UI\Core Structure\AppNavigator.cs" />
     <Compile Include="UI\Core Structure\AppScreen.cs" />
     <Compile Include="UI\Animations\FadeAnimation.cs" />
