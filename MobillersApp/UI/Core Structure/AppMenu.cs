@@ -22,6 +22,7 @@ namespace MobillersApp.UI
 
         RectTransform slidingMenuRectTransform;
         Vector2 dragStartPosition;
+        float dragAcummulator;
         float menuActivationDelta;
         float menuDeactivationDelta;
         float showHorDragPosition;
@@ -29,6 +30,8 @@ namespace MobillersApp.UI
         bool beganValidDrag;
         bool isSlidePlaying;
         bool isMenuActive;
+
+        const float NegligibleDeltaTouchPosition = 5f;
 
         void Awake()
         {
@@ -61,11 +64,6 @@ namespace MobillersApp.UI
 
             switch (touch.phase)
             {
-                case TouchPhase.Began:    
-                    
-                    CheckValidDragStart(touch);
-                    break;
-
                 case TouchPhase.Moved:
 
                     if (!beganValidDrag)
@@ -84,29 +82,39 @@ namespace MobillersApp.UI
 
         void CheckValidDragStart(Touch touch)
         {
-            if (!isMenuActive)
+            if (Mathf.Abs(touch.deltaPosition.x) > Mathf.Abs(touch.deltaPosition.y))
             {
-                if (touch.position.x <= showHorDragPosition)
+                if (!isMenuActive)
                 {
-                    beganValidDrag = true;
-                    dragStartPosition = touch.position;
+                    if (touch.position.x <= showHorDragPosition)
+                    {
+                        beganValidDrag = true;
+                        dragStartPosition = touch.position;
+                    }
                 }
-            }
-            else
-            {
-                if (touch.position.x <= hideHorDragPosition)
+                else
                 {
-                    beganValidDrag = true;
-                    dragStartPosition = touch.position;
+                    if (touch.position.x <= hideHorDragPosition)
+                    {
+                        beganValidDrag = true;
+                        dragStartPosition = touch.position;
+                    }
                 }
             }
         }
 
         void UpdateSlidingMenuPosition(Touch touch)
         {
-            float newHorPos = slidingMenuRectTransform.anchoredPosition.x + touch.deltaPosition.x;
-            newHorPos = Mathf.Clamp(newHorPos, slidingMenuAnimation.SlideInOffscreenPosition.x, slidingMenuAnimation.InitialPosition.x);           
-            slidingMenuRectTransform.anchoredPosition = new Vector2(newHorPos, slidingMenuRectTransform.anchoredPosition.y);
+            dragAcummulator += touch.deltaPosition.x;
+
+            if (Mathf.Abs(dragAcummulator) >= NegligibleDeltaTouchPosition)
+            {
+                float newHorPos = slidingMenuRectTransform.anchoredPosition.x + dragAcummulator;
+
+                dragAcummulator = 0f;
+                newHorPos = Mathf.Clamp(newHorPos, slidingMenuAnimation.SlideInOffscreenPosition.x, slidingMenuAnimation.InitialPosition.x);
+                slidingMenuRectTransform.anchoredPosition = new Vector2(newHorPos, slidingMenuRectTransform.anchoredPosition.y);
+            }
         }
 
         void CheckMenuActivation(Touch touch)
@@ -116,13 +124,15 @@ namespace MobillersApp.UI
             beganValidDrag = false;
             dragStartPosition = touch.position;
 
-            if (horTouchDelta > menuActivationDelta || horTouchDelta < menuDeactivationDelta)
+            bool shouldShowMenu = (horTouchDelta > menuActivationDelta && !isMenuActive);
+            bool shouldHideMenu = (horTouchDelta < menuDeactivationDelta && isMenuActive);
+
+            if (shouldShowMenu || shouldHideMenu)
             {
-                if (horTouchDelta > menuActivationDelta && !isMenuActive)
+                if (shouldShowMenu)
                     ShowMenu();
                 else
-                    if (horTouchDelta < menuDeactivationDelta && isMenuActive)
-                        HideMenu();
+                    HideMenu();
             }
             else
             {
