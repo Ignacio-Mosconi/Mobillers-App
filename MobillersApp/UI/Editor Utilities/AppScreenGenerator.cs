@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using UnityEngine;
 using UnityEditor;
 
@@ -79,3 +80,4 @@ namespace MobillersApp.UI.EditorUtilities
         }
     }
 }
+#endif

@@ -22,6 +22,8 @@ namespace MobillersApp.UI
 
             currentScreen = homeScreen;
 
+            appMenu.SetUpAnimations();
+
             foreach (AppScreen appScreen in appScreens)
             {
                 appScreen.SetUpAnimations();

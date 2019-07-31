@@ -47,10 +47,6 @@ namespace MobillersApp.UI
 
             menuButton.onClick.AddListener(ShowMenu);
             closeButton.onClick.AddListener(HideMenu);
-
-            slidingMenuAnimation.SetUp();
-            menuButtonAnimation.SetUp();
-            backgroundBlockerAnimation.SetUp();
             
             backgroundBlockerAnimation.Deactivate();
         }
@@ -165,6 +161,13 @@ namespace MobillersApp.UI
             Tween slideTween = slidingMenuAnimation.Hide();
             fadeTween.OnComplete(backgroundBlockerAnimation.Deactivate);
             slideTween.OnComplete(ToggleMenuStatus);
+        }
+
+        public void SetUpAnimations()
+        {
+            slidingMenuAnimation.SetUp();
+            menuButtonAnimation.SetUp();
+            backgroundBlockerAnimation.SetUp();
         }
 
         public void Activate(Sequence sequence = null)
