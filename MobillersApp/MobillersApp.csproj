@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;UNITY_2019_1_OR_NEWER</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>7.1</LangVersion>
@@ -85,7 +85,6 @@
     <Compile Include="UI\Animations\SlideAnimation.cs" />
     <Compile Include="UI\Animations\UIAnimation.cs" />
     <Compile Include="_Dependencies\DOTween\ShortcutExtensions46.cs" />
-    <Compile Include="UI\Editor Utilities\AppScreenGenerator.cs" />
     <Compile Include="App Management\UserAuthenticator.cs" />
   </ItemGroup>
   <ItemGroup>
