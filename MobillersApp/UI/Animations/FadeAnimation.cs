@@ -38,5 +38,19 @@ namespace MobillersApp.UI
 
             return tween;
         }
+
+        #region Properties
+
+        public float TargetShowAlpha
+        {
+            get { return targetShowAlpha; }
+        }
+
+        public float TargetHideAlpha
+        {
+            get { return targetHideAlpha; }
+        }
+
+        #endregion
     }
 }

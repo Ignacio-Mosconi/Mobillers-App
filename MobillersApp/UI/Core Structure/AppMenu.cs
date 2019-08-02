@@ -21,8 +21,10 @@ namespace MobillersApp.UI
         [SerializeField, Range(0f, 1f)] float hideDeltaPercentage = 0.3f;
 
         RectTransform slidingMenuRectTransform;
+        Image backgroundBlockerImage;
         Vector2 dragStartPosition;
         float dragAcummulator;
+        float bgBlockerInterp;
         float menuActivationDelta;
         float menuDeactivationDelta;
         float showHorDragPosition;
@@ -35,7 +37,8 @@ namespace MobillersApp.UI
 
         void Awake()
         {
-            slidingMenuRectTransform = slidingMenuAnimation.gameObject.GetComponent<RectTransform>();
+            slidingMenuRectTransform = slidingMenuAnimation.GetComponent<RectTransform>();
+            backgroundBlockerImage = backgroundBlockerAnimation.GetComponent<Image>();
         }
 
         void Start()
@@ -65,7 +68,10 @@ namespace MobillersApp.UI
                     if (!beganValidDrag)
                         CheckValidDragStart(touch);
                     else
+                    {
                         UpdateSlidingMenuPosition(touch);
+                        UpdateBackgroundBlockerAlpha(touch);
+                    }
                     break;
 
                 case TouchPhase.Ended:
@@ -85,6 +91,7 @@ namespace MobillersApp.UI
                     if (touch.position.x <= showHorDragPosition)
                     {
                         beganValidDrag = true;
+                        backgroundBlockerAnimation.Activate();
                         dragStartPosition = touch.position;
                     }
                 }
@@ -93,6 +100,7 @@ namespace MobillersApp.UI
                     if (touch.position.x <= hideHorDragPosition)
                     {
                         beganValidDrag = true;
+                        backgroundBlockerAnimation.Activate();
                         dragStartPosition = touch.position;
                     }
                 }
@@ -111,6 +119,16 @@ namespace MobillersApp.UI
                 newHorPos = Mathf.Clamp(newHorPos, slidingMenuAnimation.SlideInOffscreenPosition.x, slidingMenuAnimation.InitialPosition.x);
                 slidingMenuRectTransform.anchoredPosition = new Vector2(newHorPos, slidingMenuRectTransform.anchoredPosition.y);
             }
+        }
+
+        void UpdateBackgroundBlockerAlpha(Touch touch)
+        {
+            float menuDeltaPosition = Mathf.Abs(slidingMenuAnimation.SlideInOffscreenPosition.x - slidingMenuAnimation.InitialPosition.x);
+            Color newColor = backgroundBlockerImage.color;
+
+            bgBlockerInterp += touch.deltaPosition.x / menuDeltaPosition;
+            newColor.a = Mathf.Lerp(backgroundBlockerAnimation.TargetHideAlpha, backgroundBlockerAnimation.TargetShowAlpha, bgBlockerInterp);
+            backgroundBlockerImage.color = newColor;
         }
 
         void CheckMenuActivation(Touch touch)
@@ -133,9 +151,16 @@ namespace MobillersApp.UI
             else
             {
                 if (!isMenuActive)
+                {
                     slidingMenuAnimation.Hide();
+                    Tween blockerHideTween = backgroundBlockerAnimation.Hide();
+                    blockerHideTween.OnComplete(backgroundBlockerAnimation.Deactivate);
+                }
                 else
+                {
                     slidingMenuAnimation.Show();
+                    backgroundBlockerAnimation.Show();
+                }
             }
         }
 
@@ -148,7 +173,7 @@ namespace MobillersApp.UI
         void ShowMenu()
         {
             isSlidePlaying = true;
-            backgroundBlockerAnimation.Activate();
+            bgBlockerInterp = 0f;
             backgroundBlockerAnimation.Show();
             Tween slideTween = slidingMenuAnimation.Show();
             slideTween.OnComplete(ToggleMenuStatus);
@@ -157,6 +182,7 @@ namespace MobillersApp.UI
         void HideMenu()
         {
             isSlidePlaying = true;
+            bgBlockerInterp = 0f;
             Tween fadeTween = backgroundBlockerAnimation.Hide();
             Tween slideTween = slidingMenuAnimation.Hide();
             fadeTween.OnComplete(backgroundBlockerAnimation.Deactivate);
