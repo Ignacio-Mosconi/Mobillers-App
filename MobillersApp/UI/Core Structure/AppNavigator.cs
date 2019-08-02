@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using DG.Tweening;
 
 namespace MobillersApp.UI
@@ -7,13 +6,12 @@ namespace MobillersApp.UI
     public class AppNavigator : MonoBehaviour
     {
         [SerializeField] AppScreen homeScreen = default;
+        [SerializeField] SlideAnimation backHeaderAnimation = default;
 
         AppMenu appMenu;
         AppScreen[] appScreens;
         AppScreen currentScreen;
         AppScreen previousScreen;
-
-        public UnityEvent onSwitchedScreen = new UnityEvent();
         
         void Awake()
         {
@@ -23,6 +21,7 @@ namespace MobillersApp.UI
             currentScreen = homeScreen;
 
             appMenu.SetUpAnimations();
+            backHeaderAnimation.SetUp();
 
             foreach (AppScreen appScreen in appScreens)
             {
@@ -36,27 +35,32 @@ namespace MobillersApp.UI
         {
             homeScreen.Show();
             appMenu.Activate();
+            backHeaderAnimation.Activate();
         }
 
-        void CheckAppMenuAvailability(Sequence sequence = null)
+        void CheckAppMenuAvailability(Sequence showSequence, Sequence hideSequence)
         {
             if (currentScreen == homeScreen)
-                appMenu.Activate(sequence);
+            {
+                appMenu.Activate(hideSequence);
+                hideSequence.Insert(backHeaderAnimation.HideStartUpTime, backHeaderAnimation.Hide());
+            }
             else
-                appMenu.Deactivate(sequence);
+            {
+                appMenu.Deactivate();
+                showSequence.Insert(backHeaderAnimation.ShowStartUpTime, backHeaderAnimation.Show());
+            }
         }
 
         public void MoveToScreen(AppScreen nextScreen)
         {
-            currentScreen.Hide();
+            Sequence hideSequence = currentScreen.Hide();
             previousScreen = currentScreen;
 
-            nextScreen.Show();
+            Sequence showSequence = nextScreen.Show();
             currentScreen = nextScreen;
 
-            CheckAppMenuAvailability();
-
-            onSwitchedScreen.Invoke();
+            CheckAppMenuAvailability(showSequence, hideSequence);
         }
 
         public void ReturnToPreviousScreen()
@@ -64,12 +68,10 @@ namespace MobillersApp.UI
             Sequence hideSequence = currentScreen.HideReversed();
             currentScreen = previousScreen;
 
-            previousScreen.Show();
+            Sequence showSequence = previousScreen.Show();
             previousScreen = currentScreen.PreviousScreen;
 
-            CheckAppMenuAvailability(hideSequence);
-
-            onSwitchedScreen.Invoke();
+            CheckAppMenuAvailability(showSequence, hideSequence);
         }
     }
 }
