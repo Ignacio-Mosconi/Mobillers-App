@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;UNITY_EDITOR</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>7.1</LangVersion>
@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App Management\AppAlertDispatcher.cs" />
     <Compile Include="App Management\AppManager.cs" />
     <Compile Include="UI\App Screens\LogInScreen.cs" />
     <Compile Include="UI\App Screens\SignUpScreen.cs" />
@@ -84,7 +85,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Animations\SlideAnimation.cs" />
     <Compile Include="UI\Animations\UIAnimation.cs" />
-    <Compile Include="_Dependencies\DOTween\ShortcutExtensions46.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\Adapters\AlertAndroidAdapter.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\Adapters\AlertAndroidOptions.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\Adapters\AlertIOSAdapter.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\Adapters\AlertIOSOptions.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\Adapters\AlertUnityAdapter.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\Adapters\AlertUnityUIAdapter.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\Adapters\IAlertAdapter.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\Alert.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\AlertAndroid.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\AlertIOS.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\AlertIOSButton.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\AlertManager.cs" />
+    <Compile Include="_Dependencies%27 Source\Mobile Alert Dialogue\AlertMonoBehaviour.cs" />
+    <Compile Include="_Dependencies%27 Source\DOTween\ShortcutExtensions46.cs" />
     <Compile Include="App Management\UserAuthenticator.cs" />
   </ItemGroup>
   <ItemGroup>

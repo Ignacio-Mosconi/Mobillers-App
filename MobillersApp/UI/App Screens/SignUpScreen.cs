@@ -9,10 +9,19 @@ namespace MobillersApp.UI
         [SerializeField] TMP_InputField emailField = default;    
         [SerializeField] TMP_InputField passwordField = default;
         [SerializeField] TMP_InputField passwordConfirmationField = default;
+        [SerializeField] string unmatchPasswordsWarningTitle = default;
+        [SerializeField, TextArea(3, 5)] string unmatchPasswordsWarningMsg = default;
+        [SerializeField] string unmatchPasswordsWarningConfirm = default;
 
         bool EnteredMatchingPasswords()
         {
             return (passwordField.text == passwordConfirmationField.text);
+        }
+
+        void ResetPasswordFields()
+        {
+            passwordField.text = "";
+            passwordConfirmationField.text = "";
         }
 
         public void SignUpUser()
@@ -25,10 +34,8 @@ namespace MobillersApp.UI
                 AppManager.Instance.PerformSignUp(email, password);
             }
             else
-            {
-                passwordField.text = "";
-                passwordConfirmationField.text = "";
-            }
+                AppManager.Instance.DisplayWarning(unmatchPasswordsWarningTitle, unmatchPasswordsWarningMsg, unmatchPasswordsWarningConfirm,
+                                                    ResetPasswordFields, native: false);
         }
     }
 }
