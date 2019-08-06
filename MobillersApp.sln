@@ -7,14 +7,32 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobillersApp", "MobillersAp
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Android = Debug|Android
 		Debug|Any CPU = Debug|Any CPU
+		Debug|iOS = Debug|iOS
+		Debug|Unity Editor = Debug|Unity Editor
+		Release|Android = Release|Android
 		Release|Any CPU = Release|Any CPU
+		Release|iOS = Release|iOS
+		Release|Unity Editor = Release|Unity Editor
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Debug|Android.ActiveCfg = Debug|Any CPU
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Debug|Android.Build.0 = Debug|Any CPU
 		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Debug|iOS.ActiveCfg = Debug|Any CPU
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Debug|iOS.Build.0 = Debug|Any CPU
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Debug|Unity Editor.ActiveCfg = Debug|Any CPU
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Debug|Unity Editor.Build.0 = Debug|Any CPU
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Release|Android.ActiveCfg = Release|Android
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Release|Android.Build.0 = Release|Android
 		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Release|iOS.ActiveCfg = Release|iOS
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Release|iOS.Build.0 = Release|iOS
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Release|Unity Editor.ActiveCfg = Release|Unity Editor
+		{40B87D7E-7E1B-47A6-AEC7-5E8C1D465E52}.Release|Unity Editor.Build.0 = Release|Unity Editor
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
